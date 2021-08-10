@@ -20,7 +20,7 @@
         </div>
         <div class="row q-mt-md" v-if="report.data != null && report.data.errors != null && report.data.errors.length > 0">
             <div class="col">
-                <ErrorList :data="report" />
+                <ErrorList :data="report.data.errors" />
             </div>
         </div>
     </q-page>
