@@ -75,7 +75,7 @@
 
 <script>
 import { defineComponent } from "vue";
-import { Notify } from "quasar";
+import { Dialog } from "quasar";
 
 import deleteFromStoreMixin from "@/mixins/deleteFromStoreMixin";
 import exportToCSVMixin from "@/mixins/exportToCSVMixin";
@@ -148,11 +148,14 @@ export default defineComponent({
             }
         },
         showNoHostNotification() {
-            Notify.create({
-                message: "Kein Posteingangsserver vorhanden",
-                caption: "Bitte legen Sie einen Posteingangsserver an, um E-Mail Konten hinzuzufügen oder zu importieren.",
-                type: "warning",
-                icon: "warning",
+            Dialog.create({
+                title: "Kein Posteingangsserver vorhanden",
+                message:
+                    "Damit E-Mail Konten hinzugefügt oder importiert werden können, muss mindestens ein Posteingangsserver existieren.",
+                ok: "Posteingangsserver verwalten",
+                cancel: "Abbrechen",
+            }).onOk(() => {
+                this.$router.push({ name: `hosts` });
             });
         },
     },
