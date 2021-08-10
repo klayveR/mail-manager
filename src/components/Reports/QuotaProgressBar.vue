@@ -1,5 +1,5 @@
 <template>
-    <q-linear-progress rounded size="24px" :value="value" :color="color">
+    <q-linear-progress stripe rounded size="24px" :value="value" :color="color">
         <div class="absolute-full flex flex-center">
             <q-badge color="white" text-color="primary" :label="label" />
         </div>
