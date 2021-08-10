@@ -38,14 +38,14 @@ ipcMain.on("TEST_CONNECTION", async (event, { transactionId, account, host }) =>
         event.reply("TEST_CONNECTION_STATUS", { transactionId, message: "Verbindung wird hergestellt..." });
         await client.connect();
 
+        event.reply("TEST_CONNECTION_STATUS", { transactionId, message: "Verbindung wird getrennt..." });
+        await client.logout();
+
         result.success = true;
         result.message = "Verbindung konnte erfolgreich hergestellt werden.";
     } catch (error) {
         result.data.errors.push({ ...error, message: error.message });
         result.message = "Verbindung konnte nicht hergestellt werden.";
-    } finally {
-        event.reply("TEST_CONNECTION_STATUS", { transactionId, message: "Verbindung wird getrennt..." });
-        await client.logout();
     }
 
     event.reply("TEST_CONNECTION", result);
