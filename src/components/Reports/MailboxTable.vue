@@ -23,7 +23,6 @@ import { defineComponent } from "vue";
 
 const columns = [
     { name: "name", label: "Postfach", field: "name", align: "left", required: true, sortable: true },
-    { name: "path", label: "Interner Pfad", field: "path", align: "left", required: true },
     { name: "messages", label: "E-Mails", field: "messages", required: true },
     { name: "unseen", label: "Ungelesen", field: "unseen" },
     { name: "recent", label: "Vor kurzem erhalten", field: "recent" },
