@@ -1,12 +1,12 @@
 <template>
     <q-table
+        row-key="id"
+        no-data-label="Keine Posteingangsserver vorhanden"
+        rows-per-page-label="Posteingangsserver pro Seite:"
         :rows="rows"
         :columns="columns"
         :filter="filter"
-        row-key="id"
-        no-data-label="Keine Posteingangsserver vorhanden"
-        :rows-per-page-options="[25, 50, 100, 0]"
-        rows-per-page-label="Posteingangsserver pro Seite:"
+        :rows-per-page-options="[10, 25, 50]"
     >
         <template v-slot:top>
             <q-btn color="positive" icon="add" label="Hinzufügen" class="q-mr-sm" @click="$refs.formDialog.open()" />

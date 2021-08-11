@@ -1,13 +1,13 @@
 <template>
     <q-table
+        row-key="id"
+        no-data-label="Keine Berichte vorhanden"
+        rows-per-page-label="Berichte pro Seite:"
+        selection="multiple"
         :rows="rows"
         :columns="columns"
         :pagination="pagination"
-        row-key="id"
-        no-data-label="Keine Berichte vorhanden"
-        :rows-per-page-options="[25, 50, 100, 0]"
-        rows-per-page-label="Berichte pro Seite:"
-        selection="multiple"
+        :rows-per-page-options="[10, 25, 50]"
         v-model:selected="selected"
     >
         <template v-slot:top>
