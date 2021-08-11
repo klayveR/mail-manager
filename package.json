@@ -25,6 +25,8 @@
     "imapflow": "^1.0.67",
     "moment": "^2.29.1",
     "quasar": "^2.0.0",
+    "secure-ls": "^1.2.6",
+    "simple-browser-fingerprint": "^1.0.0",
     "uuid": "^8.3.2",
     "vue": "^3.0.0",
     "vue-json-pretty": "^2.0.3",
