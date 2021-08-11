@@ -48,6 +48,9 @@ export default {
         setItem(state, { id, item }) {
             state.items[id] = { ...item };
         },
+        import(state, items) {
+            state.items = { ...state.items, ...items };
+        },
         deleteItem(state, id) {
             delete state.items[id];
         },
@@ -82,28 +85,33 @@ export default {
             commit("deleteItem", id);
             return ActionResult.success("E-Mail Konto wurde erfolgreich gelöscht.");
         },
-        import({ getters, dispatch }, { items = [], updateExisting = false }) {
+        async import({ getters, commit }, { items = [], updateExisting = false }) {
             let updated = 0;
             let added = 0;
+
+            const commitItems = {};
 
             for (let item of items) {
                 if (item.user == null || item.user == "" || item.password == null || item.password == "") {
                     continue;
                 }
 
-                if (getters.exists({ item })) {
+                const existingId = getters.getId(item);
+                if (existingId != null) {
                     if (!updateExisting) {
                         continue;
                     }
 
-                    const existingId = getters.getId(item);
-                    dispatch("update", { id: existingId, item });
+                    commitItems[existingId] = item;
                     updated += 1;
                 } else {
-                    dispatch("add", item);
+                    const id = uuidv4();
+                    commitItems[id] = item;
                     added += 1;
                 }
             }
+
+            commit("import", commitItems);
 
             return ActionResult.success("E-Mail Konten wurden erfolgreich importiert.", {
                 caption: `${added} Konten hinzugefügt, ${updated} aktualisiert`,
