@@ -4,7 +4,6 @@
             <q-card-section class="row items-center q-pb-none">
                 <div>
                     <span class="text-h6">E-Mail Konto {{ editMode ? "bearbeiten" : "hinzufügen" }}</span>
-                    <span v-if="editMode" class="text-subtitle3"><br />{{ subtitle }}</span>
                 </div>
                 <q-space />
                 <q-btn icon="close" flat round dense @click="close()" />
@@ -16,6 +15,7 @@
                         v-model="form.user"
                         label="E-Mail Adresse"
                         :rules="[(val) => (val && val.length > 0) || 'Dieses Feld ist erforderlich.']"
+                        :readonly="editMode"
                         @update:model-value="changed = true"
                     >
                         <template v-slot:prepend>
