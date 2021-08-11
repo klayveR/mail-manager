@@ -1,5 +1,5 @@
 <template>
-    <q-dialog v-model="visible" persistent transition-show="jump-down" transition-hide="jump-down">
+    <q-dialog v-model="visible" persistent>
         <q-card>
             <q-card-section class="row items-center q-pb-none">
                 <div>

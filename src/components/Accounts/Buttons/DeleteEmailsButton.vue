@@ -12,7 +12,7 @@
         <q-tooltip ref="tooltip" anchor="top middle" self="bottom middle" :offset="[10, 10]"> E-Mails löschen </q-tooltip>
     </q-btn>
 
-    <q-dialog v-model="dialogVisible" persistent transition-show="jump-down" transition-hide="jump-down">
+    <q-dialog v-model="dialogVisible" persistent>
         <q-card>
             <q-card-section class="row items-center q-pb-none">
                 <div>

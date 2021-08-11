@@ -1,5 +1,5 @@
 <template>
-    <q-dialog v-model="visible" persistent transition-show="jump-down" transition-hide="jump-down">
+    <q-dialog v-model="visible" persistent>
         <q-card>
             <q-card-section class="row items-center q-pb-none">
                 <div>
@@ -16,6 +16,7 @@
                             v-model="form.file"
                             accept=".csv"
                             label="CSV-Datei auswählen..."
+                            lazy-rules
                             :rules="[(val) => val != null || 'Dieses Feld ist erforderlich.']"
                             :disable="csvData != null"
                         >
@@ -108,7 +109,13 @@
                 </q-card-section>
 
                 <q-card-actions align="right" class="text-primary">
-                    <q-btn flat :label="csvData == null ? 'Weiter' : 'Importieren'" type="submit" />
+                    <q-btn
+                        flat
+                        type="submit"
+                        :label="csvData == null ? 'Weiter' : 'Importieren'"
+                        :loading="importing"
+                        :disable="importing"
+                    />
                 </q-card-actions>
             </q-form>
         </q-card>
@@ -121,6 +128,7 @@ import { Dialog, Notify } from "quasar";
 import { v4 as uuidv4 } from "uuid";
 
 import BooleanIcon from "@/apponents/BooleanIcon.vue";
+import { mapGetters } from "vuex";
 
 let removeListener;
 const formDefaults = {
@@ -144,6 +152,10 @@ export default defineComponent({
     },
 
     computed: {
+        ...mapGetters("accounts", {
+            accountExists: "exists",
+            getAccountId: "getId",
+        }),
         hostOptions() {
             const options = [];
             for (const [id, host] of Object.entries(this.hosts)) {
@@ -244,6 +256,8 @@ export default defineComponent({
         },
 
         async submitImport() {
+            this.importing = true;
+
             const items = [];
             for (const row of this.csvData.rows) {
                 items.push({
@@ -257,12 +271,15 @@ export default defineComponent({
                 items: items,
                 updateExisting: this.form.updateExisting,
             });
+
             result.showNotification();
 
             if (result.success) {
                 this.canClose = true;
                 this.close();
             }
+
+            this.importing = false;
         },
     },
 
@@ -272,6 +289,7 @@ export default defineComponent({
             csvData: undefined,
             transactionId: undefined,
             canClose: true,
+            importing: false,
             form: { ...formDefaults },
         };
     },
