@@ -55,7 +55,7 @@ export default {
     actions: {
         add({ commit, getters }, item) {
             if (getters.exists({ item })) {
-                return ActionResult.error(false, `Ein E-Mail Konto mit der E-Mail Adresse ${item.user} existiert bereits.`);
+                return ActionResult.error(`Ein E-Mail Konto mit der E-Mail Adresse ${item.user} existiert bereits.`);
             }
 
             const id = uuidv4();
