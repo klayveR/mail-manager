@@ -73,9 +73,9 @@ export default defineComponent({
 
     methods: {
         deleteHost(row) {
-            this.deleteItemFromStore({
+            this.deleteItemsFromStore({
                 action: "hosts/delete",
-                id: row.id,
+                ids: [row.id],
                 title: "Posteingangsserver löschen",
                 message: `Möchten Sie den Posteingangsserver ${row.server} wirklich löschen?`,
             });

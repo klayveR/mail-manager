@@ -1,7 +1,22 @@
 <template>
     <q-card>
         <q-card-section>
-            <div class="text-h6">{{ report.name }}</div>
+            <div class="row">
+                <div class="col q-mr-sm text-h6">
+                    {{ report.name }}
+                </div>
+                <div class="col">
+                    <q-btn
+                        flat
+                        dense
+                        class="float-right"
+                        icon="delete"
+                        color="negative"
+                        label="Bericht löschen"
+                        @click="deleteReport()"
+                    />
+                </div>
+            </div>
         </q-card-section>
 
         <q-separator />
@@ -32,16 +47,36 @@
 <script>
 import { defineComponent } from "vue";
 
+import deleteFromStoreMixin from "@/mixins/deleteFromStoreMixin";
 import dateMixin from "@/mixins/dateMixin";
 
 export default defineComponent({
     name: "Overview Card",
 
-    mixins: [dateMixin],
+    mixins: [deleteFromStoreMixin, dateMixin],
 
     props: {
         report: Object,
         reportId: String,
+    },
+
+    methods: {
+        deleteReport() {
+            // Delete report from store and return to reports list if deletion successful
+            this.deleteItemsFromStore(
+                {
+                    action: "reports/delete",
+                    ids: [this.reportId],
+                    title: "Bericht löschen",
+                    message: `Möchten Sie diesen Bericht wirklich löschen?`,
+                },
+                (deletedIds) => {
+                    if (deletedIds.length >= 1) {
+                        this.$router.push({ name: "reports" });
+                    }
+                }
+            );
+        },
     },
 });
 </script>

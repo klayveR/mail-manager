@@ -126,9 +126,9 @@ export default defineComponent({
 
     methods: {
         deleteAccount(row) {
-            this.deleteItemFromStore({
+            this.deleteItemsFromStore({
                 action: "accounts/delete",
-                id: row.id,
+                ids: [row.id],
                 title: "E-Mail Konto löschen",
                 message: `Möchten Sie das E-Mail Konto ${row.user} wirklich löschen?`,
             });

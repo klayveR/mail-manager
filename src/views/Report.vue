@@ -2,7 +2,7 @@
     <q-page class="q-pa-md" v-if="report != null">
         <div class="row q-gutter-md">
             <div class="col">
-                <OverviewCard :report="report" />
+                <OverviewCard :report="report" :report-id="reportId" />
             </div>
             <div class="col" v-if="report.data != null && report.data.account != null">
                 <AccountCard :account="report.data.account" :host="report.data.host" />
@@ -59,17 +59,16 @@ export default defineComponent({
     data() {
         return {
             report: undefined,
+            reportId: this.$route.params.id,
         };
     },
 
     async activated() {
-        const id = this.$route.params.id;
-
-        if (this.existsReportId(id)) {
-            this.report = this.reports[id];
+        if (this.existsReportId(this.reportId)) {
+            this.report = this.reports[this.reportId];
 
             if (!this.report.read) {
-                const result = await this.$store.dispatch("reports/markAsRead", id);
+                const result = await this.$store.dispatch("reports/markAsRead", this.reportId);
                 if (!result.success) {
                     result.showNotification();
                 }
