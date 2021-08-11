@@ -24,7 +24,7 @@ ipcMain.on("PARSE_CSV", (event, { transactionId, filePath, delimiter = "," }) =>
             result.data.rows.push(row);
         })
         .on("end", (rowCount) => {
-            if (rowCount > 1) {
+            if (rowCount > 0) {
                 result.data.headers = Object.keys(result.data.rows[0]);
                 result.success = true;
             } else {
