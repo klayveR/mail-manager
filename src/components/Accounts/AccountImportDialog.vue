@@ -16,7 +16,7 @@
                             v-model="form.file"
                             accept=".csv"
                             label="CSV-Datei auswählen..."
-                            lazy-rules
+                            lazy-rules="ondemand"
                             :rules="[(val) => val != null || 'Dieses Feld ist erforderlich.']"
                             :disable="csvData != null"
                         >
